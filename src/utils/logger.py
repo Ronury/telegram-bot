@@ -1,4 +1,3 @@
-import sys
 from loguru import logger
 
 from src.core import config

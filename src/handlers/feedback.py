@@ -1,7 +1,6 @@
 from telebot import TeleBot
 from telebot.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 
-from src.core import config
 from src.utils.logger import logger
 
 

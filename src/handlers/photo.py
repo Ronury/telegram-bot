@@ -12,8 +12,6 @@ from src.utils.logger import logger
 
 
 def photo_handler(msg: Message, state: StateContext, bot: TeleBot):
-    logger.info(f"User {msg.chat.id} sent photo")
-
     if msg.text:
         bot.send_message(msg.chat.id, "Пожалуйста, отправьте изображение, а не текст.")
         return
@@ -28,11 +26,11 @@ def photo_handler(msg: Message, state: StateContext, bot: TeleBot):
     elif msg.photo:
         file_id = msg.photo[-1].file_id
     
+    logger.info(f"User {msg.chat.id} sent photo")
     bot.send_message(msg.chat.id, "Спасибо! Я получил ваш рентгеновский снимок."
                                     "Начинаю анализ... Пожалуйста, подождите.")
     bot.send_chat_action(msg.chat.id, 'typing')
     state.set(UploadStates.processing_file)
-
     
     file_info = bot.get_file(file_id)
     downloaded_file = bot.download_file(file_info.file_path)
