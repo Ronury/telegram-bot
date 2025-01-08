@@ -34,7 +34,6 @@ def photo_handler(msg: Message, state: StateContext, bot: TeleBot):
     
     file_info = bot.get_file(file_id)
     downloaded_file = bot.download_file(file_info.file_path)
-    image = Image.open(BytesIO(downloaded_file))
     try:
         image = Image.open(BytesIO(downloaded_file))
         modified_image = image.convert('L').resize((512, 512), resample=Image.Resampling.LANCZOS)
@@ -43,8 +42,6 @@ def photo_handler(msg: Message, state: StateContext, bot: TeleBot):
         bot.send_message(msg.chat.id, "Произошла ошибка при обработке изображения. Попробуйте загрузить его снова.")
         state.delete()
         return
-
-    modified_image = image.convert('L').resize((512, 512), resample=Image.Resampling.LANCZOS)
 
     image_array = np.array(modified_image)
     image_array1 = np.expand_dims(image_array, axis=-1)
